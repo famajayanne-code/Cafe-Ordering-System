@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+    ☕ Four Stories Cafe
+{% block title %}Search Menu ID | {% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <h1>Search Menu ID</h1>
+</div>
+
+<section class="panel">
+    <form method="GET"
+          action="{{ url_for('search_binary') }}"
+          class="toolbar">
+
+        <input
+            type="number"
+            name="id"
+            placeholder="Enter menu item ID"
+            min="1"
+            value="{{ query }}"
+            required
+        >
+
+        <button type="submit" class="button">
+            Search
+        </button>
+    </form>
+
+    {% if result %}
+    <div class="result success-result">
+        <h2>Menu Item Found!</h2>
+        <p><strong>ID:</strong> {{ result.id }}</p>
+        <p><strong>Name:</strong> {{ result.name }}</p>
+        <p><strong>Price:</strong> ₱{{ result.price }}</p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="result error-text">
+        {{ error }}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

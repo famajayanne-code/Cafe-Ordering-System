@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+    ☕ Four Stories Cafe
+{% block title %}New Order · {% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Add order</h1></div></div>
+<form method="post">
+<section class="panel">
+  <label class="wide-label">Customer name<input name="customer_name" maxlength="100" required placeholder="Enter customer name"></label>
+  <h2>Available menu</h2>
+  <div class="product-grid">
+  {% for item in items %}
+    <article class="product">
+      <div class="product-icon">{% if item.category == 'Pastry' %}🥐{% elif item.category == 'Non-Coffee' %}🍵{% else %}☕{% endif %}</div>
+      <div class="product-info"><span class="eyebrow">{{ item.category }}</span><h3>{{ item.name }}</h3><strong>₱{{ "%.2f"|format(item.price) }}</strong></div>
+      <label class="qty">Qty<input type="number" name="qty_{{ item.id }}" min="0" max="99" value="0"></label>
+    </article>
+  {% else %}<p class="empty">No available menu items. Add or enable an item first.</p>{% endfor %}
+  </div>
+</section>
+<section class="panel checkout">
+  <div><h2>Payment method</h2></div>
+  <label class="payment-option"><input type="radio" name="payment_method" value="Cash" required> Cash</label>
+  <label class="payment-option"><input type="radio" name="payment_method" value="GCash" required> GCash</label>
+  <button class="button" type="submit">Save order</button>
+</section>
+</form>
+{% endblock %}

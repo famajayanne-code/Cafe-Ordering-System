@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+    ☕ Four Stories Cafe
+{% block title %}Reports · {% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">PERFORMANCE</p><h1>Sales reports</h1></div></div>
+<section class="stats"><article class="stat"><span>Completed orders</span><strong>{{ totals.count }}</strong></article><article class="stat"><span>Completed revenue</span><strong>₱{{ "%.2f"|format(totals.revenue) }}</strong></article></section>
+<section class="panel"><h2>Best-selling items</h2><div class="table-wrap"><table><thead><tr><th>Menu item</th><th>Quantity sold</th></tr></thead><tbody>{% for row in bestsellers %}<tr><td>{{ row.item_name }}</td><td>{{ row.qty }}</td></tr>{% else %}<tr><td colspan="2" class="empty">No completed sales yet.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}

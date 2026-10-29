@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+    ☕ Four Stories Cafe
+{% block title %}Order #{{ order.id }} · {% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">ORDER RECEIPT</p><h1>Order #{{ order.id }}</h1><p class="muted">Created {{ order.created_at }}</p></div><a class="button secondary" href="{{ url_for('orders') }}">← Back to orders</a></div>
+<section class="panel receipt">
+  <div class="receipt-head"><div><span class="muted">Customer</span><h2>{{ order.customer_name }}</h2></div><div><span class="muted">Order status</span><p><span class="pill">{{ order.status }}</span></p></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Item</th><th>Unit price</th><th>Qty</th><th>Line total</th></tr></thead><tbody>
+  {% for item in items %}<tr><td>{{ item.item_name }}</td><td>₱{{ "%.2f"|format(item.unit_price) }}</td><td>{{ item.quantity }}</td><td>₱{{ "%.2f"|format(item.line_total) }}</td></tr>{% endfor %}
+  </tbody><tfoot><tr><th colspan="3">TOTAL</th><th>₱{{ "%.2f"|format(order.total) }}</th></tr></tfoot></table></div>
+  <div class="receipt-foot"><p><strong>Payment:</strong> {{ order.payment_method }}</p><p><strong>Payment status:</strong> {{ order.payment_status }}</p></div>
+  {% if order.status=='Pending' %}<div class="actions"><form method="post" action="{{ url_for('complete_order', order_id=order.id) }}"><button class="button" type="submit">Mark completed</button></form><form method="post" action="{{ url_for('cancel_order', order_id=order.id) }}"><button class="button secondary" type="submit">Cancel order</button></form></div>{% endif %}
+  <button class="button secondary no-print" onclick="window.print()">Print receipt</button>
+</section>
+{% endblock %}
